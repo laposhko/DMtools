@@ -50,3 +50,46 @@ copyBtn.addEventListener("click", () => {
       alert("Failed to copy: " + err);
     });
 });
+
+//aliases creation
+const aliasesForm = document.querySelector(".aliases-form");
+const aliasesOutput = document.querySelector(".aliases-output");
+function printSeoAccounts(number, domain) {
+  for (let i = number; i < number + 30; i++) {
+    console.log(`SEO ${i}`);
+  }
+}
+function generateEmails(number, domain) {
+  let emails = [];
+  for (let i = number; i < number + 30; i++) {
+    emails.push(`seo${i}@${domain}`);
+  }
+  return emails.join("\n");
+}
+function generateNames(number) {
+  let names = [];
+  for (let i = number; i < number + 30; i++) {
+    names.push(`SEO ${i}`);
+  }
+  return names.join("\n");
+}
+aliasesForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const number = Number(event.target.elements[0].value);
+  const domain = event.target.elements[1].value;
+  // aliasesOutput.innerHTML = "";
+  const newParagraph = document.createElement("p");
+  newParagraph.textContent = "Appended paragraph";
+  aliasesOutput.insertAdjacentHTML(
+    "beforeend",
+    `Your group: seo${number}-${number + 30}.${domain}`
+  );
+  aliasesOutput.insertAdjacentHTML(
+    "beforeend",
+    `<br/>Your alises: ${generateEmails(number, domain)}`
+  );
+  aliasesOutput.insertAdjacentHTML(
+    "beforeend",
+    `<br/>Your names: ${generateNames(number)}`
+  );
+});
