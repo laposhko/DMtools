@@ -1,56 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Unique Domain Extractor</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    textarea {
-      width: 45%;
-      height: 200px;
-      font-family: monospace;
-    }
-    #output {
-      width: 45%;
-      height: 200px;
-      font-family: monospace;
-      white-space: pre;
-      border: 1px solid #ccc;
-      padding: 8px;
-      background-color: #f9f9f9;
-    }
-    .container {
-      display: flex;
-      gap: 5%;
-    }
-  </style>
-</head>
-<body>
-  <h1>Unique Domain Extractor</h1>
-  <div class="container">
-    <textarea id="inputText" placeholder="Paste your text here..."></textarea>
-    <div id="output"></div>
-  </div>
-  <br>
-  <button onclick="processText()">Extract Domains</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DM tools</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <!-- <nav>
+      <ul>
+        <li>Unique Domain Extractor</li>
+        <li>SEO Aliases Creation</li>
+      </ul>
+    </nav> -->
+    <div class="container">
+      <div class="unique-block">
+        <!-- <h2>Unique Domain Extractor</h2> -->
+        <form action="" class="unique-form">
+          <textarea
+            class="unique-input"
+            placeholder="Paste your text here..."
+          ></textarea>
+          <button type="submit" class="unique-btn">Extract domains</button>
+        </form>
+        <div class="unique-output">
+          <div class="output-text"></div>
+          <div class="quantity"></div>
+          <button type="button" class="copy-btn" disabled>Copy</button>
+        </div>
+      </div>
 
-  <script>
-    function extractUniqueDomainsAsColumn(text) {
-      const domainRegex = /\b(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}\b/gi;
-      const matches = text.match(domainRegex);
-      if (!matches) return "";
-      const uniqueDomains = [...new Set(matches.map(domain => domain.toLowerCase()))];
-      return uniqueDomains.join('\n');
-    }
+      <!-- <div><h2>SEO Aliases Creation</h2></div> -->
+    </div>
 
-    function processText() {
-      const input = document.getElementById('inputText').value;
-      const result = extractUniqueDomainsAsColumn(input);
-      document.getElementById('output').textContent = result;
-    }
-  </script>
-</body>
+    <script type="module" src="./main.js"></script>
+  </body>
 </html>

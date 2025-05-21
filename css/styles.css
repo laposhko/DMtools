@@ -1,0 +1,79 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+}
+button {
+  all: unset;
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: #4f46e5;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+button:hover {
+  background-color: #4338ca; /* Darker Indigo */
+}
+
+button:active {
+  transform: scale(0.97);
+  background-color: rgb(20, 20, 57);
+}
+button:disabled {
+  background-color: #9ca3af; /* gray-400 */
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.8;
+  /* padding: 10px 16px; */
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+}
+.container {
+  padding: 20px;
+}
+
+.unique-block {
+  display: flex;
+  gap: 10px;
+}
+.unique-form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 10px;
+}
+.unique-input {
+  min-height: 200px;
+  padding: 10px;
+}
+.unique-btn {
+}
+.unique-output {
+  background-color: rgba(187, 187, 187, 0.318);
+  min-width: 50%;
+  min-height: 200px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  position: relative;
+}
+.output-text {
+  height: 100%;
+  padding: 10px;
+}
+.copy-btn {
+  position: absolute;
+  bottom: 7px;
+  right: 7px;
+  /* z-index: 5; */
+}
+.quantity {
+  position: absolute;
+  bottom: 7px;
+  left: 7px;
+}
