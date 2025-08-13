@@ -54,42 +54,68 @@ copyBtn.addEventListener("click", () => {
 //aliases creation
 const aliasesForm = document.querySelector(".aliases-form");
 const aliasesOutput = document.querySelector(".aliases-output");
-function printSeoAccounts(number, domain) {
-  for (let i = number; i < number + 30; i++) {
-    console.log(`SEO ${i}`);
-  }
-}
+const aliasesEmails = document.querySelector(".aliases-emails");
+
 function generateEmails(number, domain) {
   let emails = [];
-  for (let i = number; i < number + 30; i++) {
-    emails.push(`seo${i}@${domain}`);
+  for (let i = number +1; i < number + 31; i++) {
+    emails.push(`seo${i<1000? '0'+i: i}@${domain}`);
   }
-  return emails.join("\n");
+  return emails;
 }
 function generateNames(number) {
   let names = [];
-  for (let i = number; i < number + 30; i++) {
-    names.push(`SEO ${i}`);
+  for (let i = number; i < number + 31; i++) {
+    names.push(`SEO ${i<1000? '0'+i: i}`);
   }
-  return names.join("\n");
+  return names;
 }
 aliasesForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const number = Number(event.target.elements[0].value);
+  aliasesOutput.innerHTML = "";
   const domain = event.target.elements[1].value;
-  // aliasesOutput.innerHTML = "";
+  const number = Number(event.target.elements[0].value);
+  const admin = event.target.elements[2].value;
+  const emails = generateEmails(number, domain); 
+  const names = generateNames(number);
   const newParagraph = document.createElement("p");
   newParagraph.textContent = "Appended paragraph";
-  aliasesOutput.insertAdjacentHTML(
-    "beforeend",
-    `Your group: seo${number}-${number + 30}.${domain}`
-  );
-  aliasesOutput.insertAdjacentHTML(
-    "beforeend",
-    `<br/>Your alises: ${generateEmails(number, domain)}`
-  );
-  aliasesOutput.insertAdjacentHTML(
-    "beforeend",
-    `<br/>Your names: ${generateNames(number)}`
-  );
+  let html = '';
+for (let i = 0; i < 30; i++) {
+  html += `
+    <tr>
+      <td>${emails[i]}</td>
+      <td>${names[i + 1]}</td>
+      <td></td>
+      <td></td>
+      <td>Admin ${admin}</td>    
+    </tr>
+  `;
+}
+   aliasesOutput.insertAdjacentHTML(   "beforeend",
+    `<pre><code>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Group XXX [NAME]</th>
+      <th>Cloudflare Account Name</th>
+      <th>NS</th>
+      <th>Domain</th>
+      <th>Access</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>seo${number< 1000? '0'+number: number}-${(number+30)< 1000? '0'+(number+30): (number+30)}@${domain}</td>
+      <td>${names[0]}</td>
+      <td></td>
+      <td></td>
+      <td>Admin ${admin}</td>
+    </tr>
+    ${html}
+  </tbody>
+</code></pre>
+</table>`
+)
+  aliasesEmails.innerHTML = `<br/>${emails.join('\n')}`;
 });
