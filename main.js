@@ -56,66 +56,76 @@ const aliasesForm = document.querySelector(".aliases-form");
 const aliasesOutput = document.querySelector(".aliases-output");
 const aliasesEmails = document.querySelector(".aliases-emails");
 
-function generateEmails(number, domain) {
+function pad(num, width = 4) {
+  return String(num).padStart(width, "0");
+}
+
+function generateEmails(startNumber, domain, total = 31, width = 4) {
   let emails = [];
-  for (let i = number +1; i < number + 31; i++) {
-    emails.push(`seo${i<1000? '0'+i: i}@${domain}`);
+  for (let i = startNumber + 1; i < startNumber + total; i++) {
+    emails.push(`seo${pad(i, width)}@${domain}`);
   }
   return emails;
 }
-function generateNames(number) {
+
+function generateNames(startNumber, total = 31, width = 4) {
   let names = [];
-  for (let i = number; i < number + 31; i++) {
-    names.push(`SEO ${i<1000? '0'+i: i}`);
+  for (let i = startNumber; i < startNumber + total; i++) {
+    names.push(`SEO ${pad(i, width)}`);
   }
   return names;
 }
+
 aliasesForm.addEventListener("submit", (event) => {
   event.preventDefault();
   aliasesOutput.innerHTML = "";
-  const domain = event.target.elements[1].value;
-  const number = Number(event.target.elements[0].value);
-  const admin = event.target.elements[2].value;
-  const emails = generateEmails(number, domain); 
-  const names = generateNames(number);
-  const newParagraph = document.createElement("p");
-  newParagraph.textContent = "Appended paragraph";
-  let html = '';
-for (let i = 0; i < 30; i++) {
-  html += `
-    <tr>
-      <td>${emails[i]}</td>
-      <td>${names[i + 1]}</td>
-      <td></td>
-      <td></td>
-      <td>Admin ${admin}</td>    
-    </tr>
+
+  const numberRaw = event.target.elements[0].value.trim(); // сохраняем как строку
+  const domain = event.target.elements[1].value.trim();
+  const admin = event.target.elements[2].value.trim();
+
+  const number = Number(numberRaw);
+  const width = numberRaw.length || 4; // например 0020 -> width 4
+
+  const emails = generateEmails(number, domain, 31, width);
+  const names = generateNames(number, 31, width);
+
+  let html = "";
+  for (let i = 0; i < 30; i++) {
+    html += `
+      <tr>
+        <td>${emails[i]}</td>
+        <td>${names[i + 1]}</td>
+        <td></td>
+        <td></td>
+        <td>Admin ${admin}</td>
+      </tr>
+    `;
+  }
+
+  aliasesOutput.innerHTML = `
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Group XXX [NAME]</th>
+          <th>Cloudflare Account Name</th>
+          <th>NS</th>
+          <th>Domain</th>
+          <th>Access</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>seo${pad(number, width)}-${pad(number + 30, width)}@${domain}</td>
+          <td>${names[0]}</td>
+          <td></td>
+          <td></td>
+          <td>Admin ${admin}</td>
+        </tr>
+        ${html}
+      </tbody>
+    </table>
   `;
-}
-   aliasesOutput.insertAdjacentHTML(   "beforeend",
-    `<pre><code>
-<table border="1">
-  <thead>
-    <tr>
-      <th>Group XXX [NAME]</th>
-      <th>Cloudflare Account Name</th>
-      <th>NS</th>
-      <th>Domain</th>
-      <th>Access</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>seo${number< 1000? '0'+number: number}-${(number+30)< 1000? '0'+(number+30): (number+30)}@${domain}</td>
-      <td>${names[0]}</td>
-      <td></td>
-      <td></td>
-      <td>Admin ${admin}</td>
-    </tr>
-    ${html}
-  </tbody>
-</code></pre>
-</table>`
-)
-  aliasesEmails.innerHTML = `<br/>${emails.join('\n')}`;
+
+  aliasesEmails.textContent = emails.join("\n");
 });
